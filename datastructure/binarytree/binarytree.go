@@ -1,10 +1,8 @@
 package bst
 
 type Node struct {
-	val    int
-	Parent *Node
-	Left   *Node
-	Right  *Node
+	val                 int
+	parent, left, right *Node
 }
 
 func NewNode(i int) *Node {
@@ -22,7 +20,7 @@ func (n *Node) Compare(m *Node) int {
 }
 
 type Tree struct {
-	Head *Node
+	head *Node
 	size int
 }
 
@@ -30,27 +28,27 @@ func NewTree(n *Node) *Tree {
 	if n == nil {
 		return &Tree{}
 	}
-	return &Tree{Head: n, size: 1}
+	return &Tree{head: n, size: 1}
 }
 
 func (t *Tree) Insert(i int) {
 	n := &Node{val: i}
-	if t.Head == nil {
-		t.Head = n
+	if t.head == nil {
+		t.head = n
 		t.size++
 		return
 	}
 
-	h := t.Head
+	h := t.head
 
 	for {
 		if n.Compare(h) == -1 {
-			if h.Left == nil {
-				h.Left = n
-				n.Parent = h
+			if h.left == nil {
+				h.left = n
+				n.parent = h
 				break
 			} else {
-				h = h.Right
+				h = h.right
 			}
 		}
 	}
@@ -58,15 +56,15 @@ func (t *Tree) Insert(i int) {
 }
 
 func (t *Tree) Search(i int) *Node {
-	h := t.Head
+	h := t.head
 	n := &Node{val: i}
 
 	for h != nil {
 		switch h.Compare(n) {
 		case -1:
-			h = h.Right
+			h = h.right
 		case 1:
-			h = h.Left
+			h = h.left
 		case 0:
 			return h
 		default:
